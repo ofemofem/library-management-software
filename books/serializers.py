@@ -11,23 +11,29 @@ class LibraryBranchSerializer(serializers.ModelSerializer):
 
 
 class BookCategorySerializer(serializers.ModelSerializer):
+
     class Meta:
         model = BookCategory
-        fields = ['name']
-
-
-class BookSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Book
-        fields = ['title', 'pages_count', 'publish_year', 'library_branch', 'book_categories']
-
+        fields = ['id', 'name']
 
 class BookAuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BookAuthor
-        fields = ['name', 'book']
+        fields = ['name']
+
+
+class BookSerializer(serializers.ModelSerializer):
+    library_branch = LibraryBranchSerializer(many=False, read_only=True)
+    book_categories = BookCategorySerializer(many=True, read_only=True)
+    author = BookAuthorSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = Book
+        fields = ['title', 'pages_count', 'publish_year', 'library_branch', 'book_categories', 'author']
+
+
+
 
 
 class HireSerializer(serializers.ModelSerializer):

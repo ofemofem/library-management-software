@@ -17,6 +17,13 @@ class BookCategory(models.Model):
         return self.name
 
 
+class BookAuthor(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
 class Book(models.Model):
     title = models.CharField(max_length=255)
     pages_count = models.IntegerField()
@@ -24,17 +31,10 @@ class Book(models.Model):
 
     library_branch = models.OneToOneField(LibraryBranch, on_delete=models.CASCADE, null=True, blank=True)
     book_categories = models.ManyToManyField(BookCategory, blank=True)
+    author = models.ForeignKey(BookAuthor, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.title
-
-
-class BookAuthor(models.Model):
-    name = models.CharField(max_length=255)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='BookAuthor')
-
-    def __str__(self):
-        return self.name
 
 
 class Hire(models.Model):
