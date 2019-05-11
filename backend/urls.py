@@ -25,6 +25,10 @@ from books import views
 
 router = DefaultRouter()
 router.register('books', views.BookViewSet, base_name='Book')
+router.register('categories', views.BookCategoryViewSet, base_name='BookCategory')
+router.register('authors', views.BookAuthorViewSet, base_name='BookAuthor')
+router.register('libraries', views.LibraryBranchViewSet, base_name='Library_branch')
+router.register('hires', views.HireViewSet, base_name='Hire')
 router.register('users', view.UserViewSet, base_name='User')
 
 
