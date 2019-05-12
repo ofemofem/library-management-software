@@ -8,7 +8,10 @@ from .serializers import (
     LibraryBranchSerializer,
     HireSerializer
 )
-from backend.permissions import IsLibrarian
+from backend.custom.permissions import IsLibrarian, IsReader
+
+from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class LibraryBranchViewSet(viewsets.ModelViewSet):
@@ -24,6 +27,9 @@ class BookCategoryViewSet(viewsets.ModelViewSet):
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filter_fields = ('book_categories', 'publish_year')
+    search_fields = ['title', 'author__name']
 
     def get_permissions(self):
         # can be self.action = ... if we want check methods like 'list', 'retrieve' etc.
@@ -43,3 +49,12 @@ class BookAuthorViewSet(viewsets.ModelViewSet):
 class HireViewSet(viewsets.ModelViewSet):
     queryset = Hire.objects.all()
     serializer_class = HireSerializer
+
+    def get_permissions(self):
+        # can be self.action = ... if we want check methods like 'list', 'retrieve' etc.
+        if self.request.method == 'POST':
+            self.permission_classes = [IsReader, ]
+        else:
+            self.permission_classes = []
+
+        return super(HireViewSet, self).get_permissions()

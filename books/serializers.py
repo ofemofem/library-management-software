@@ -16,6 +16,7 @@ class BookCategorySerializer(serializers.ModelSerializer):
         model = BookCategory
         fields = ['id', 'name']
 
+
 class BookAuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -24,15 +25,11 @@ class BookAuthorSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    library_branch = LibraryBranchSerializer(many=False, read_only=True)
-    book_categories = BookCategorySerializer(many=True, read_only=True)
-    author = BookAuthorSerializer(many=False, read_only=True)
-
+    author = serializers.StringRelatedField()
+    book_categories = serializers.StringRelatedField(many=True)
     class Meta:
         model = Book
         fields = ['title', 'pages_count', 'publish_year', 'library_branch', 'book_categories', 'author']
-
-
 
 
 

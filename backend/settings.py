@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'books',
 
     'rest_framework',
+    'django_filters',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -154,10 +155,13 @@ SIMPLE_JWT = {
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),     # default permission
 
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': (                                                # default authentication
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+
+    'DEFAULT_PAGINATION_CLASS': 'backend.custom.paginations.BasePagination',           # default pagination
 }
+
 
