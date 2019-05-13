@@ -1,13 +1,6 @@
-from .models import Book, BookCategory, BookAuthor, LibraryBranch, Hire
+from .models import Book, BookCategory, BookAuthor
 
 from rest_framework import serializers
-
-
-class LibraryBranchSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = LibraryBranch
-        fields = ['name', 'address', 'phone_number']
 
 
 class BookCategorySerializer(serializers.ModelSerializer):
@@ -27,16 +20,20 @@ class BookAuthorSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     book_categories = serializers.StringRelatedField(many=True)
+    borrow_status = serializers.SerializerMethodField()
+
     class Meta:
         model = Book
-        fields = ['title', 'pages_count', 'publish_year', 'library_branch', 'book_categories', 'author']
+        fields = [
+            'title',
+            'pages_count',
+            'publish_year',
+            'library_branch',
+            'book_categories',
+            'author',
+            'borrow_status'
+        ]
 
 
-
-class HireSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Hire
-        fields = ['hire_date', 'return_date', 'penalty_amount', 'is_penalty', 'book', 'hired_by']
 
 

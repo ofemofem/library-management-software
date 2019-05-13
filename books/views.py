@@ -1,22 +1,15 @@
-from .models import Book, BookCategory, BookAuthor, LibraryBranch, Hire
+from .models import Book, BookCategory, BookAuthor
 
 from rest_framework import viewsets
 from .serializers import (
     BookSerializer,
     BookCategorySerializer,
     BookAuthorSerializer,
-    LibraryBranchSerializer,
-    HireSerializer
 )
-from backend.custom.permissions import IsLibrarian, IsReader
+from backend.custom.permissions import IsLibrarian
 
 from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
-
-
-class LibraryBranchViewSet(viewsets.ModelViewSet):
-    queryset = LibraryBranch.objects.all()
-    serializer_class = LibraryBranchSerializer
 
 
 class BookCategoryViewSet(viewsets.ModelViewSet):
@@ -28,7 +21,7 @@ class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     filter_backends = (DjangoFilterBackend, SearchFilter)
-    filter_fields = ('book_categories', 'publish_year')
+    filter_fields = ('book_categories', 'publish_year', 'library_branch')
     search_fields = ['title', 'author__name']
 
     def get_permissions(self):
@@ -46,15 +39,4 @@ class BookAuthorViewSet(viewsets.ModelViewSet):
     serializer_class = BookAuthorSerializer
 
 
-class HireViewSet(viewsets.ModelViewSet):
-    queryset = Hire.objects.all()
-    serializer_class = HireSerializer
 
-    def get_permissions(self):
-        # can be self.action = ... if we want check methods like 'list', 'retrieve' etc.
-        if self.request.method == 'POST':
-            self.permission_classes = [IsReader, ]
-        else:
-            self.permission_classes = []
-
-        return super(HireViewSet, self).get_permissions()

@@ -1,14 +1,6 @@
 from django.db import models
-from django.conf import settings
 
-
-class LibraryBranch(models.Model):
-    name = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    phone_number = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.name
+from library_branch.models import LibraryBranch
 
 
 class BookCategory(models.Model):
@@ -34,15 +26,18 @@ class Book(models.Model):
     book_categories = models.ManyToManyField(BookCategory, blank=True)
     author = models.ForeignKey(BookAuthor, on_delete=models.CASCADE, null=True, blank=True)
 
+    BORROW_STATUS = (
+        ('o', 'On borrow'),
+        ('a', 'Available')
+    )
+
+    status = models.CharField(
+        max_length=1,
+        choices=BORROW_STATUS,
+        blank=True,
+        default='a',
+        help_text='Book availability'
+    )
+
     def __str__(self):
         return self.title
-
-
-class Hire(models.Model):
-    hire_date = models.DateTimeField()
-    return_date = models.DateTimeField()
-    penalty_amount = models.IntegerField()
-    is_penalty = models.BooleanField(default=False)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    hired_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    is_returned = models.BooleanField(default=False)

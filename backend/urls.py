@@ -19,17 +19,19 @@ from rest_framework.routers import DefaultRouter
 
 from rest_framework_simplejwt import views as jwt_views
 
-from accounts import views as view
-from books import views
+from accounts import views as accounts_view
+from books import views as books_view
+from library_branch import views as library_branch_view
+from borrow import views as borrow_view
 
 
 router = DefaultRouter()
-router.register('books', views.BookViewSet, base_name='Book')
-router.register('categories', views.BookCategoryViewSet, base_name='BookCategory')
-router.register('authors', views.BookAuthorViewSet, base_name='BookAuthor')
-router.register('libraries', views.LibraryBranchViewSet, base_name='Library_branch')
-router.register('hires', views.HireViewSet, base_name='Hire')
-router.register('users', view.UserViewSet, base_name='User')
+router.register('books', books_view.BookViewSet, base_name='Book')
+router.register('categories', books_view.BookCategoryViewSet, base_name='BookCategory')
+router.register('authors', books_view.BookAuthorViewSet, base_name='BookAuthor')
+router.register('libraries', library_branch_view.LibraryBranchViewSet, base_name='Library_branch')
+router.register('borrows', borrow_view.BorrowViewSet, base_name='Borrow')
+router.register('users', accounts_view.UserViewSet, base_name='User')
 
 
 urlpatterns = [
