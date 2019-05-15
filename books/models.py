@@ -26,18 +26,5 @@ class Book(models.Model):
     book_categories = models.ManyToManyField(BookCategory, blank=True)
     author = models.ForeignKey(BookAuthor, on_delete=models.CASCADE, null=True, blank=True)
 
-    BORROW_STATUS = (
-        ('o', 'On borrow'),
-        ('a', 'Available')
-    )
-
-    status = models.CharField(
-        max_length=1,
-        choices=BORROW_STATUS,
-        blank=True,
-        default='a',
-        help_text='Book availability'
-    )
-
     def __str__(self):
         return self.title

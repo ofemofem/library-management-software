@@ -1,5 +1,5 @@
 from .models import Book, BookCategory, BookAuthor
-
+from borrow.models import Borrow
 from rest_framework import serializers
 
 
@@ -20,11 +20,13 @@ class BookAuthorSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     book_categories = serializers.StringRelatedField(many=True)
+    library_branch = serializers.StringRelatedField()
     borrow_status = serializers.SerializerMethodField()
 
     class Meta:
         model = Book
         fields = [
+            'id',
             'title',
             'pages_count',
             'publish_year',
@@ -34,6 +36,11 @@ class BookSerializer(serializers.ModelSerializer):
             'borrow_status'
         ]
 
+    def get_borrow_status(self, obj):
+        borrow = Borrow.objects.filter(book=obj.id, is_returned=False)
+        if not borrow:
+            return 'available'
+        return 'on_borrow'
 
 
 

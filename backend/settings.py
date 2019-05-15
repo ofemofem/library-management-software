@@ -168,7 +168,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 
-    'DEFAULT_PAGINATION_CLASS': 'backend.custom.paginations.BasePagination',           # default pagination
+    'DEFAULT_PAGINATION_CLASS': 'backend.custom.paginations.BasePagination',
+
+    # default pagination
 }
 
 

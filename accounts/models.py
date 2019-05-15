@@ -7,3 +7,5 @@ class User(AbstractUser):
     is_reader = models.BooleanField(default=False)
     is_librarian = models.BooleanField(default=False)
 
+
+
