@@ -5,8 +5,6 @@ from books.models import Book
 from datetime import datetime, timedelta
 
 
-
-
 class Borrow(models.Model):
     borrow_date = models.DateTimeField(auto_now_add=True)
     return_date = models.DateTimeField(default=datetime.now()+timedelta(days=30))
@@ -14,6 +12,8 @@ class Borrow(models.Model):
     is_returned = models.BooleanField(default=False)
     penalty_amount = models.IntegerField(default=0)
     is_penalty = models.BooleanField(default=False)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='borrows')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     borrower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
 

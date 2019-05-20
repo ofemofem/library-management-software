@@ -22,9 +22,9 @@ class Book(models.Model):
     pages_count = models.IntegerField()
     publish_year = models.IntegerField()
 
-    library_branch = models.ForeignKey(LibraryBranch, on_delete=models.CASCADE, null=True, blank=True)
-    book_categories = models.ManyToManyField(BookCategory, blank=True)
-    author = models.ForeignKey(BookAuthor, on_delete=models.CASCADE, null=True, blank=True)
+    library_branch = models.ForeignKey(LibraryBranch, on_delete=models.CASCADE)
+    book_categories = models.ManyToManyField(BookCategory)
+    author = models.ForeignKey(BookAuthor, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

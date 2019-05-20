@@ -32,6 +32,7 @@ router.register('authors', books_view.BookAuthorViewSet, base_name='BookAuthor')
 router.register('libraries', library_branch_view.LibraryBranchViewSet, base_name='Library_branch')
 router.register('borrows', borrow_view.BorrowViewSet, base_name='Borrow')
 router.register('users', accounts_view.UserViewSet, base_name='User')
+router.register('dictionaries', books_view.DictionariesViewSet, base_name='Dictionaries')
 
 
 urlpatterns = [
