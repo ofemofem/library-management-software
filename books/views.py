@@ -9,13 +9,9 @@ from .serializers import (
 )
 from backend.custom.permissions import IsLibrarian
 
-from rest_framework.filters import SearchFilter
+from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
-from library_branch.models import LibraryBranch
-from library_branch.serializers import LibraryBranchSerializer
-
-from rest_framework.response import Response
 
 
 class BookCategoryViewSet(viewsets.ModelViewSet):
@@ -26,9 +22,10 @@ class BookCategoryViewSet(viewsets.ModelViewSet):
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    filter_backends = (DjangoFilterBackend, SearchFilter)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     filter_fields = ('book_categories', 'publish_year', 'library_branch')
     search_fields = ['title', 'author__name']
+    ordering_fields = ['created_at']
 
     def get_permissions(self):
         # can be self.action = ... if we want check methods like 'list', 'retrieve' etc.
@@ -46,20 +43,5 @@ class BookAuthorViewSet(viewsets.ModelViewSet):
     serializer_class = BookAuthorSerializer
 
 
-class DictionariesViewSet(viewsets.ViewSet):
-
-    def list(self, request):
-        branches = LibraryBranch.objects.all()
-        categories = BookCategory.objects.all()
-
-        serializer_branches = LibraryBranchSerializer(branches, many=True)
-        serializer_categories = BookCategorySerializer(categories, many=True)
-
-        response = {
-            'library_branches': serializer_branches.data,
-            'book_categories': serializer_categories.data,
-        }
-
-        return Response(response)
 
 

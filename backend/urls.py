@@ -23,7 +23,7 @@ from accounts import views as accounts_view
 from books import views as books_view
 from library_branch import views as library_branch_view
 from borrow import views as borrow_view
-
+from backend.custom import dictionaries_views
 
 router = DefaultRouter()
 router.register('books', books_view.BookViewSet, base_name='Book')
@@ -32,7 +32,7 @@ router.register('authors', books_view.BookAuthorViewSet, base_name='BookAuthor')
 router.register('libraries', library_branch_view.LibraryBranchViewSet, base_name='Library_branch')
 router.register('borrows', borrow_view.BorrowViewSet, base_name='Borrow')
 router.register('users', accounts_view.UserViewSet, base_name='User')
-router.register('dictionaries', books_view.DictionariesViewSet, base_name='Dictionaries')
+router.register('dictionaries', dictionaries_views.DictionariesViewSet, base_name='Dictionaries')
 
 
 urlpatterns = [

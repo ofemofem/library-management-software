@@ -47,6 +47,7 @@ class BookDetailSerializer(serializers.ModelSerializer):
         model = Book
         fields = [
             'id',
+            'created_at',
             'title',
             'pages_count',
             'publish_year',
