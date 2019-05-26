@@ -1,9 +1,11 @@
+
 from .models import Borrow
-from books.serializers import BookSerializer
 
 from rest_framework import serializers
 
-from accounts.serializers import UserSerializer
+# from accounts.serializers import UserSerializer
+
+# from books.serializers import BookSerializer
 
 
 class BorrowSerializer(serializers.ModelSerializer):
@@ -18,8 +20,8 @@ class BorrowSerializer(serializers.ModelSerializer):
 
 class BorrowDetailSerializer(serializers.ModelSerializer):
 
-    borrower = UserSerializer(many=False, read_only=True)
-    book = BookSerializer(many=False, read_only=True)
+    # borrower = UserSerializer(read_only=True)
+    # book = BookSerializer(read_only=True)
 
     class Meta:
         model = Borrow
@@ -34,5 +36,4 @@ class BorrowDetailSerializer(serializers.ModelSerializer):
             'borrower',
             'is_returned'
         ]
-        # depth = 1
-
+        depth = 1

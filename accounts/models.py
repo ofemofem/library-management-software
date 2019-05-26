@@ -11,4 +11,3 @@ class User(AbstractUser):
     is_librarian = models.BooleanField(default=False)
 
 
-
